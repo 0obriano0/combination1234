@@ -6,12 +6,18 @@
 #include <math.h>
 #include <windows.h>
 
+struct combination_data{ //名稱為student的結構
+	int num;
+	char *data;
+};
+
 char st[1000];
 char buffer;
 int num1=1000;
 
 int getstringlength(char *s);
 void down(int num,char *s);
+void downs(combination_data *loaddata);
 void create_data(char *s,char chr);
 
 int main()
@@ -21,9 +27,12 @@ int main()
 	scanf("%s",st);
 	num1 = getstringlength(st);
 	for(int loopnum1=num1-1;loopnum1 >= 0;loopnum1--){
-		char c[num1];
-		c[num1-1]=loopnum1;
-		down(num1-2,c);
+		combination_data loaddata;
+		loaddata.num = num1;
+		loaddata.data = new char[loaddata.num];
+		*(loaddata.data+loaddata.num-1)=loopnum1;
+		//down(loaddata.num-2,loaddata.data);
+		downs(&loaddata);
 	}	
 } 
 
@@ -47,6 +56,11 @@ void down(int num,char *s){
 		}
 		create_data("test.txt",'\n');
 	}
+}
+
+void downs(combination_data *loaddata){
+	down((*loaddata).num-2,(*loaddata).data);
+	//printf("%s     %d",(*loaddata).data,(*loaddata).num-2);
 }
 
 int getstringlength(char *s){
