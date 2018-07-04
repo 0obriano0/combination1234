@@ -6,7 +6,7 @@
 #include <math.h>
 #include <windows.h>
 
-struct combination_data{ //名稱為student的結構
+struct combination_data{
 	int num;
 	char *data;
 };
