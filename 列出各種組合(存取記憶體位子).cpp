@@ -30,8 +30,8 @@ int main()
 		int c[num1+1];
 		c[num1]=loopnum1;
 		c[0] = num1-2;
-		_beginthread(down_, (num1-1)-loopnum1,c);
-		//down_(c);
+		//_beginthread(down_, (num1-1)-loopnum1,c);
+		down_(c);
 	}	
 } 
 
