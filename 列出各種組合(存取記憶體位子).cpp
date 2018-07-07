@@ -27,7 +27,7 @@ int main()
 		c[2] = num1+3;
 		c[(num1+1)*2]=loopnum1;
 		for(int loopnum2 = 0;loopnum2 < num1;loopnum2++){
-			c[loopnum2+3] = st[loopnum2];
+			c[loopnum2+3] = st[loopnum2]-'0';
 		}
 		//_beginthread(down_,0,c);
 		down_(c);
@@ -50,7 +50,7 @@ void down_d(int num,int data2,int *s,int *numbox){
 		}
 	}else{
 		char str[data2];
-		str[0] = *(numbox+*(s+data2-1));
+		str[0] = *(numbox+*(s+data2-1))+'0';
 		str[1] = '\0';
 		char file[getstringlength(str)+10];
 		file[0] = '\0';
@@ -74,7 +74,7 @@ void down_(int *loadnum){
 	s2=loadnum+data3;
 	
 	char str[data2];
-	str[0] = st[*(s2+1+data2-1)];
+	str[0] = *(s1+*(s2+data2-1))+'0';
 	str[1] = '\0';
 	char file[getstringlength(str)+10];
 	file[0] = '\0';
