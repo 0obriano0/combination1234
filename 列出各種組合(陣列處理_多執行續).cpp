@@ -21,6 +21,7 @@ int main()
 	num1 = getstringlength(st);
 	int *c;
 	int *ptr[100];
+	long clk_start = clock()/CLOCKS_PER_SEC; //輸入程式執行到現在的時間
 	for(int loopnum1=num1-1;loopnum1 >= 0;loopnum1--){
 		do{
 			c = (int)malloc(sizeof(int)*((num1+1)*2+2));
@@ -55,6 +56,9 @@ int main()
 			}
 		}
 	}
+	long clk_end;
+	clk_end = clock()/CLOCKS_PER_SEC - clk_start;
+	fprintf(stderr,"測試時間: %d 秒\n",clk_end);
 	for(int loopnum4=num1-1;loopnum4 >= 0;loopnum4--)
 		free(ptr[loopnum4]);
 	system("pause");
