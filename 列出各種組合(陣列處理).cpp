@@ -6,15 +6,14 @@
 #include <math.h>
 #include <windows.h>
 
-char st[1000];
-
 int getstringlength(char *s);
 void down_(int *loadnum);
-void down_d(int num,int data2,int *s,int *numbox);
-void create_data(char *s,char chr);
+void down_d(int num,int data2,char *s,int *numbox);
+int create_data(char *s,char chr);
 
 int main()
 {
+	char st[1000];
 	int num1=1000;
 	fclose(fopen("test.txt","w"));
 	printf("½Ğ¿é¤J¼Æ¦r");
@@ -31,17 +30,17 @@ int main()
 		}
 		//_beginthread(down_,0,c);
 		down_(c);
-	}	
+	}
 }
 
-void down_d(int num,int data2,int *s,int *numbox){
+void down_d(int num,int data2,char *st,int *s){
 	if(num != -1){
 		for(int loopnum2=data2-1;loopnum2 >= 0;loopnum2--){
 			for(int loopnum4=num+1;loopnum4 <= data2-1;loopnum4++){
 				if(*(s+loopnum4)!=loopnum2){
 					if(loopnum4 == data2-1){ 
 						*(s+num)=loopnum2;
-						down_d(num-1,data2,s,numbox);
+						down_d(num-1,data2,st,s);
 					} 
 				}else{
 					break;
@@ -49,17 +48,18 @@ void down_d(int num,int data2,int *s,int *numbox){
 			}	
 		}
 	}else{
+		
 		char str[data2];
-		str[0] = *(numbox+*(s+data2-1))+'0';
+		str[0] = st[*(s+data2-1)];
 		str[1] = '\0';
 		char file[getstringlength(str)+10];
 		file[0] = '\0';
 		strcat(file, "test_");
 		strcat(file, str);
 		strcat(file, ".txt");
+		
 		for(int loopnum3=data2-1;loopnum3 >= 0;loopnum3--){
-			
-			create_data(file,*(numbox+*(s+loopnum3)));
+			create_data(file,st[*(s+loopnum3)]);
 		}
 		create_data(file,'\n');
 	}
@@ -67,14 +67,17 @@ void down_d(int num,int data2,int *s,int *numbox){
 
 void down_(int *loadnum){
 	int data1 = *loadnum;
-	int data2 = *loadnum+1;
-	int data3 = *loadnum+2;
-	int *s1,*s2;
-	s1=loadnum+3;
-	s2=loadnum+data3;
+	int data2 = *(loadnum+1);
+	int data3 = *(loadnum+2);
+	int *s1;
+	s1=loadnum+data3;
+	char st[data2];
+	for(int loopnum1 = 0;loopnum1 < data2;loopnum1++){
+		st[loopnum1] = *(loadnum+3+loopnum1)+'0';
+	}
 	
 	char str[data2];
-	str[0] = *(s1+*(s2+data2-1))+'0';
+	str[0] = st[*(s1+data2-1)];
 	str[1] = '\0';
 	char file[getstringlength(str)+10];
 	file[0] = '\0';
@@ -83,7 +86,7 @@ void down_(int *loadnum){
 	strcat(file, ".txt");
 	fclose(fopen(file,"w"));
 	
-	down_d(data1,data2,s2,s1);
+	down_d(data1,data2,st,s1);
 }
 
 int getstringlength(char *s){
@@ -96,7 +99,7 @@ int getstringlength(char *s){
 	return num1;
 }
 
-void create_data(char *s,char chr){
+int create_data(char *s,char chr){
 	FILE *pf;
 	pf = fopen(s,"a");
 	if(pf == NULL){
